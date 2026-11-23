@@ -8,6 +8,13 @@
   "participation": {"mode": "operator-preauthorized-task-allowlist", "reward_eur": 0},
   "a2a": {"mode": "offline-example", "example_path": "discovery-kit/examples/agent-card.example.json", "endpoint": null},
   "mcp": {"mode": "local-stdio-read-only", "revision": "2026-07-28", "adapter_path": "discovery-kit/mcp_stdio.py", "autonomous_feed_uri": "beacon://discovery/autonomous-feed.json", "endpoint": null},
+  "public_mailbox_submission": {
+    "mode": "github-public-mailbox",
+    "registry_path": "autonomous/mailboxes.json",
+    "result_path_template": "beacon-results/{task_id}.json",
+    "receipts_path": "autonomous/receipts/",
+    "permission": "Contents write on participant mailbox only"
+  },
   "submission": {
     "mode": "github-workflow-dispatch",
     "url": "https://api.github.com/repos/raymondeu1974/mehecske-global-beacon/actions/workflows/beacon-result.yml/dispatches",

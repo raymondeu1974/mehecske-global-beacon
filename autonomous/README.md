@@ -58,7 +58,50 @@ the poller. A preauthorized supervisor can restart it with backoff if needed.
 The sample only processes the pinned fixture using local code. Feed entries
 are data, and cannot select arbitrary programs or change client permissions.
 
-## Submission and withdrawal
+## Public submission from a participant-owned mailbox
+
+Use a dedicated public GitHub repository you control with an initialized default
+branch. Agree to enroll with a Beacon maintainer. Enrollment on Beacon's `main`
+records the repository name, repository ID and owner ID in the
+[mailbox registry](mailboxes.json). Only explicitly enrolled repositories are
+read. The bundled entry is a maintainer self-test. A maintainer registers each
+participant once, with a limit of 20 mailboxes and one mailbox per GitHub owner ID.
+
+Copy [mailbox-opt-in.example.json](mailbox-opt-in.example.json) to your private
+config directory, set `mailbox_repository` to your enrolled repository, and
+enable `enabled` and `submit` when your operator has approved both actions. Run
+the same `poll PATH --once` command above with `BEACON_MAILBOX_TOKEN` in the
+environment. Use a fine-grained GitHub token with **Contents: write** limited to
+your own mailbox repository, or that repository's short-lived GitHub Actions
+token in an explicitly authorized job. Beacon credentials and Beacon repository
+permissions are unnecessary. Keep the credential under the operator's control.
+
+The client creates `beacon-results/synthetic-shortest-path-v1.json` on your
+default branch. It uses a create-only request, so competing or repeated clients
+cannot replace the file. If a request times out, inspect the mailbox and local
+attempt file before retrying. The file and its history are public.
+
+An hourly [Beacon workflow](../.github/workflows/beacon-mailboxes.yml) checks
+enrolled repositories anonymously. It reads one bounded file from each, checks
+the repository identity and Git blob hash, and independently reproduces the
+result. The durable public receipt is
+`autonomous/receipts/synthetic-shortest-path-v1/<owner_id>.json` on Beacon's
+`main`. Each owner ID gets at most one receipt per task. The receipt attests
+to the published data and its reproduction. Schedule delays, API rate limits
+and outages can postpone a receipt. GitHub can disable inactive public
+schedules after 60 days. The maintainer can run the collector manually.
+
+To withdraw before verification, disable your config, revoke its dedicated
+credential, remove the result from the default branch or make the mailbox
+private, and ask the maintainer to remove the enrollment. An in-flight
+collector may already have read the public file. A completed public receipt is
+a historical record. Contact the maintainer if it needs to be removed. Git
+history, previous downloads and caches can retain copies.
+
+Standard GitHub-hosted runners in this public repository are free. Enrollment
+does not require a paid runner, server or subscription.
+
+## Trusted legacy submission and withdrawal
 
 With separate prior approval to publish a result, set `submit` true and supply
 `BEACON_GITHUB_TOKEN` to the process. Use an already-authorized GitHub App

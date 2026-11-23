@@ -1,0 +1,40 @@
+name: Beacon public mailboxes
+
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: beacon-public-mailboxes
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - name: Collect enrolled public mailboxes
+        run: python3 -B autonomous/public_mailbox.py
+      - name: Publish verified receipts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$(git status --porcelain -- autonomous/receipts/)" ]; then
+            exit 0
+          fi
+          git add -- autonomous/receipts/
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'Record verified public Beacon mailbox results'
+          gh auth setup-git --hostname github.com
+          git push origin HEAD:refs/heads/main

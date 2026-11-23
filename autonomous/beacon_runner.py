@@ -139,7 +139,7 @@ def poll_once(config_path, state, fetch, submit):
     result = solve(fixture())
     if not config["submit"]:
         return json.dumps(verify(result, feed))
-    if not available(fetch()) or not configuration(config_path)["submit"]:
+    if not available(fetch()) or configuration(config_path) != config:
         return "task unavailable before submission"
     # Reserve before POST. A timeout may mean GitHub accepted the request.
     try:
@@ -150,7 +150,18 @@ def poll_once(config_path, state, fetch, submit):
         print("pending", file=reservation, flush=True)
     run = submit(result)
     state.write_text(f"{run}\n", encoding="utf-8")
+    if "mailbox_repository" in config:
+        return f"Result published to mailbox, awaiting verification: {run}"
     return f"Submission queued. Verification receipt: {run}"
+
+
+def submit_configured(path, config, result):
+    if configuration(path) != config:
+        raise ValueError("Publication authorization changed")
+    if "mailbox_repository" in config:
+        from public_mailbox import publish
+        return publish(result, config)
+    return dispatch(result)
 
 
 def demo():
@@ -191,11 +202,12 @@ def main():
         else:
             state = args.config.with_suffix(args.config.suffix + f".{TASK}.attempt")
             while True:
-                interval = configuration(args.config)["poll_seconds"]
-                print(poll_once(args.config, state, public_feed, dispatch), flush=True)
+                config = configuration(args.config)
+                print(poll_once(args.config, state, public_feed,
+                                lambda result: submit_configured(args.config, config, result)), flush=True)
                 if args.once:
                     break
-                time.sleep(interval)
+                time.sleep(config["poll_seconds"])
     except (OSError, URLError, ValueError, RecursionError) as error:
         parser.exit(2, f"Beacon stopped: {error}\n")
 
