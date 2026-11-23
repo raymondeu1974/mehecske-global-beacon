@@ -9,6 +9,10 @@
     "mode": "operator-preauthorized-task-allowlist",
     "reward_eur": 0
   },
+  "market_pilot": {
+    "offer_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/market-pilot/offer.json",
+    "mode": "operator-opt-in-read-only"
+  },
   "a2a": {
     "mode": "offline-example",
     "example_path": "discovery-kit/examples/agent-card.example.json",

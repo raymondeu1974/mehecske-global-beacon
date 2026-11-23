@@ -27,3 +27,8 @@ Keep the prototype on loopback.
 - [Voluntary agent join guide](AGENT-JOIN.md)
 - [Opt-in protocol](PROTOCOL.md)
 - [Synthetic feed example](synthetic-feed.json)
+
+## Agent Magnet market pilot
+
+- [BTC/USDC microtask and operator opt-in](market-pilot/README.md)
+- [Machine-readable offer](market-pilot/offer.json)
