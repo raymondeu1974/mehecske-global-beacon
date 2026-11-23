@@ -111,6 +111,14 @@ class DiscoveryTests(unittest.TestCase):
                          [-32601, -32602, -32602, -32022, -32602, -32602, -32601])
         self.assertEqual(replies[3]["error"]["data"]["supported"], [VERSION])
 
+    def test_autonomous_resource_round_trip(self):
+        uri = "beacon://discovery/autonomous-feed.json"
+        listing, read = exchange(request(1, "resources/list"), request(2, "resources/read", uri=uri))
+        self.assertIn(uri, [item["uri"] for item in listing["result"]["resources"]])
+        content, = read["result"]["contents"]
+        self.assertEqual(content["uri"], uri)
+        self.assertEqual(json.loads(content["text"]), load("../autonomous/feed.json"))
+
     def test_bad_frames_and_notification_do_not_stop_stdio(self):
         replies = exchange(
             "{", "[1]", '{"jsonrpc":"2.0","method":"notifications/cancelled"}',

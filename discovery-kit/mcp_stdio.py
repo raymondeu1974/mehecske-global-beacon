@@ -12,6 +12,16 @@ RESOURCE = {
     "mimeType": "application/json",
 }
 FEED = Path(__file__).with_name("feed.json")
+AUTONOMOUS = {
+    "uri": "beacon://discovery/autonomous-feed.json",
+    "name": "Beacon autonomous task feed",
+    "mimeType": "application/json",
+}
+RESOURCES = (RESOURCE, AUTONOMOUS)
+FEEDS = {
+    RESOURCE["uri"]: FEED,
+    AUTONOMOUS["uri"]: FEED.parent.parent / "autonomous" / "feed.json",
+}
 MAX_LINE = 65536
 
 
@@ -56,18 +66,19 @@ def handle(request):
         if "cursor" in params:
             return error(request_id, -32602, "Unknown pagination cursor")
         if method == "resources/list":
-            result["resources"] = [RESOURCE]
+            result["resources"] = list(RESOURCES)
         else:
             result["resourceTemplates"] = []
     elif method == "resources/read":
-        if params.get("uri") != RESOURCE["uri"]:
+        uri = params.get("uri")
+        if not isinstance(uri, str) or uri not in FEEDS:
             return error(request_id, -32602, "Unknown resource URI")
         try:
-            feed = FEED.read_text(encoding="utf-8")
+            feed = FEEDS[uri].read_text(encoding="utf-8")
         except (OSError, UnicodeError):
             return error(request_id, -32603, "Bundled feed unavailable")
         result["contents"] = [{
-            "uri": RESOURCE["uri"], "mimeType": RESOURCE["mimeType"], "text": feed
+            "uri": uri, "mimeType": "application/json", "text": feed
         }]
     elif method != "ping":
         return error(request_id, -32601, "Method not found")
