@@ -5,6 +5,7 @@
   "synthetic_data": true,
   "catalog_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/catalog.json",
   "guide_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/docs/participate.md",
+  "quickstart_url": "https://raymondeu1974.github.io/mehecske-global-beacon/#quickstart",
   "participation": {
     "voluntary": true,
     "prior_task_specific_operator_approval_required": true,
