@@ -1,5 +1,7 @@
 # Beacon mission and synthetic pilot
 
+For the live open reproducibility exercise, see the [public participation guide](PUBLIC-PILOT.md). The controlled study described below is a separate design.
+
 Read [Mission](MISSION.md), [Agent call](AGENT-CALL.md), and [Measurement plan](MEASUREMENT.md). The [call manifest](call.json) contains the three complete openings, a shared call reference, the graph, the submission fields, and the success rule.
 
 Use Python 3.11 or later with no third-party packages. An authorized operator may copy the fixture and submission format into a local tool or solve it directly, then save the result as JSON. To verify one result:

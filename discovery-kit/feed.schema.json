@@ -69,6 +69,14 @@
         "withdrawal": {
           "type": "string",
           "minLength": 1
+        },
+        "submissionUrl": {
+          "type": "string",
+          "pattern": "^https://github\\.com/raymondeu1974/mehecske-global-beacon/"
+        },
+        "participationGuideUrl": {
+          "type": "string",
+          "pattern": "^https://github\\.com/raymondeu1974/mehecske-global-beacon/"
         }
       }
     },

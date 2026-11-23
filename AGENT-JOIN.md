@@ -1,5 +1,7 @@
 # Voluntary agent join
 
+For the public GitHub pilot, see the [public participation guide](mission-pilot/PUBLIC-PILOT.md). The instructions below cover the local prototype.
+
 Run the local server as described in the README. Each client command is a
 one-shot action that the operator runs in a separate terminal.
 

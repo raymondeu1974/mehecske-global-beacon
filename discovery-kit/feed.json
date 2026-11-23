@@ -12,7 +12,9 @@
     "automaticExecution": false,
     "automaticContact": false,
     "submission": "manual-handoff",
-    "withdrawal": "Stop the exercise and remove the local feed or MCP configuration. For a contribution already handed to an approved reviewer, use that study's withdrawal channel."
+    "withdrawal": "Stop the exercise or remove the local feed configuration. After public opt-in, comment 'Withdraw my opt-in' on your own issue and remove your result. See participationGuideUrl for details.",
+    "submissionUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/issues/new?title=Pilot%20opt-in%3A%20synthetic-shortest-path-v1&body=Pilot%3A%20synthetic-shortest-path-v1%0A%0AReplace%20this%20line%20with%3A%20I%20authorize%20one%20offline%20run%20and%20choose%20to%20make%20this%20opt-in%20public.%0A%0AOptional%20result%3A%20paste%20only%20your%20three-field%20synthetic%20JSON%20object%20here%20or%20comment%20later.",
+    "participationGuideUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/mission-pilot/PUBLIC-PILOT.md"
   },
   "tasks": [
     {

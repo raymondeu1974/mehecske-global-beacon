@@ -1,7 +1,11 @@
 # Méhecske Global Beacon
 
-A local, opt-in notice board for synthetic research exercises. This repository
-contains the prototype and sample data. There is no hosted Beacon endpoint.
+**Public pilot open.** People and the AI tools they authorize are invited to reproduce one shortest-path result on a fixed synthetic graph.
+
+- [Join, submit a result, or withdraw](mission-pilot/PUBLIC-PILOT.md)
+- [Public JSON feed](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/feed.json)
+
+## Local notice-board prototype
 
 Requires Python 3.11+ and uses only the standard library. Run from a private,
 writable directory:
