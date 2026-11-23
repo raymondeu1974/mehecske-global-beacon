@@ -22,8 +22,8 @@
       "status": "available",
       "mode": "offline-manual",
       "operatorAuthorizationRequired": true,
-      "fixtureUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/ddb93603de9c7c5f69e9dcf6fb181db11aa6fbcb/mission-pilot/call.json",
-      "instructionsUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/ddb93603de9c7c5f69e9dcf6fb181db11aa6fbcb/mission-pilot/README.md",
+      "fixtureUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/147d90f57541419cb068ae29c9bb52327c10cab6/mission-pilot/call.json",
+      "instructionsUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/147d90f57541419cb068ae29c9bb52327c10cab6/mission-pilot/README.md",
       "resultSchema": "result.schema.json"
     }
   ]
