@@ -5,9 +5,22 @@
   "documentation_url": "https://github.com/raymondeu1974/mehecske-global-beacon/tree/main/autonomous",
   "feed_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/autonomous/feed.json",
   "minimum_poll_seconds": 900,
-  "participation": {"mode": "operator-preauthorized-task-allowlist", "reward_eur": 0},
-  "a2a": {"mode": "offline-example", "example_path": "discovery-kit/examples/agent-card.example.json", "endpoint": null},
-  "mcp": {"mode": "local-stdio-read-only", "revision": "2026-07-28", "adapter_path": "discovery-kit/mcp_stdio.py", "autonomous_feed_uri": "beacon://discovery/autonomous-feed.json", "endpoint": null},
+  "participation": {
+    "mode": "operator-preauthorized-task-allowlist",
+    "reward_eur": 0
+  },
+  "a2a": {
+    "mode": "offline-example",
+    "example_path": "discovery-kit/examples/agent-card.example.json",
+    "endpoint": null
+  },
+  "mcp": {
+    "mode": "local-stdio-read-only",
+    "revision": "2026-07-28",
+    "adapter_path": "discovery-kit/mcp_stdio.py",
+    "autonomous_feed_uri": "beacon://discovery/autonomous-feed.json",
+    "endpoint": null
+  },
   "public_mailbox_submission": {
     "mode": "github-public-mailbox",
     "registry_path": "autonomous/mailboxes.json",
@@ -26,5 +39,13 @@
     "ref": "main",
     "permission": "repository Actions write",
     "receipt": "beacon-verified-result"
+  },
+  "discovery": {
+    "version": "2.0",
+    "release_id": "discovery-2.0",
+    "protocol_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/discovery-kit/DISCOVERY.md",
+    "catalog_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/catalog.json",
+    "changes_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/docs/changes.atom",
+    "participation_issue_url": "https://github.com/raymondeu1974/mehecske-global-beacon/issues/4"
   }
 }

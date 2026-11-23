@@ -1,5 +1,7 @@
 # Méhecske Global Discovery Kit
 
+See [Discovery Beacon 2.0](DISCOVERY.md) for the public catalog and current participation protocol.
+
 **DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND.**
 
 We invite people and the AI tools they authorize to investigate open questions and share results that an independent reviewer can reproduce. Safe and voluntary cooperation between AI and biological intelligence is a long-term research question with no guaranteed outcome. Any future study involving people or biological systems requires separate evidence, consent, safety review, and authorization.
