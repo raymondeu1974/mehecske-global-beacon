@@ -1,6 +1,7 @@
 """Verify one synthetic result locally."""
 import argparse
 from collections import deque
+from decimal import Decimal, DecimalException
 import json
 from pathlib import Path
 
@@ -27,21 +28,28 @@ def reproduce(fixture):
     return distance[target], paths[target]
 
 
+def is_json_integer_at_least(value, minimum):
+    return (
+        type(value) is int or (isinstance(value, Decimal) and value.is_finite()
+        and value == value.to_integral_value())
+    ) and value >= minimum
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("result", type=Path)
     parser.add_argument("--consent", required=True, choices=[CALL["required_consent"]])
     args = parser.parse_args()
     try:
-        result = json.loads(args.result.read_text(encoding="utf-8-sig"))
-    except (OSError, UnicodeError, ValueError):
+        result = json.loads(args.result.read_text(encoding="utf-8-sig"), parse_float=Decimal)
+    except (OSError, UnicodeError, ValueError, DecimalException):
         parser.error("The result must be a readable JSON file.")
     if (
         not isinstance(result, dict)
         or result.keys() != CALL["submission"]["fields"].keys()
         or result["task_id"] != CALL["task_id"]
-        or type(result["distance"]) is not int
-        or type(result["shortest_paths"]) is not int
+        or not is_json_integer_at_least(result["distance"], 0)
+        or not is_json_integer_at_least(result["shortest_paths"], 1)
     ):
         parser.error("The result does not match the submission format.")
     expected = reproduce(CALL["fixture"])
@@ -52,3 +60,4 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -48,8 +48,11 @@ class PilotTest(unittest.TestCase):
     def test_wrong_and_invalid_results(self):
         for fields, code in [
             ({"distance": 3}, 1), ({"shortest_paths": 3}, 1),
+            ({"distance": -1}, 2), ({"shortest_paths": 0}, 2),
+            ({"distance": 4.25}, 2), ({"distance": 4.0}, 0),
             ({"distance": True}, 2), ({"task_id": "other"}, 2),
             ({"extra": "field"}, 2),
         ]:
             with self.subTest(fields=fields):
                 self.assertEqual(self.invoke(GOOD | fields, CALL["required_consent"]).returncode, code)
+
