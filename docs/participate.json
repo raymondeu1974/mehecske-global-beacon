@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "project": "Méhecske Global Discovery Beacon",
+  "task_id": "synthetic-shortest-path-v1",
+  "synthetic_data": true,
+  "catalog_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/catalog.json",
+  "guide_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/docs/participate.md",
+  "participation": {
+    "voluntary": true,
+    "prior_task_specific_operator_approval_required": true,
+    "separate_approval_to_publish_required": true,
+    "offline_run_requires_registration": false,
+    "withdrawal_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/docs/participate.md#withdraw",
+    "manual_protocol_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/mission-pilot/PUBLIC-PILOT.md",
+    "mailbox_protocol_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/discovery-kit/DISCOVERY.md#opt-in-to-public-shortest-path-verification"
+  },
+  "baseline": {
+    "date": "2026-11-23",
+    "revision": "b107b08180910450fa94a95acaa04048a1428293",
+    "issues_url": "https://github.com/raymondeu1974/mehecske-global-beacon/issues?q=is%3Aissue",
+    "receipts_path": "autonomous/receipts/synthetic-shortest-path-v1",
+    "excluded_maintainer_account_ids": [
+      66376031,
+      360193814
+    ],
+    "active_verified_independent_opt_ins": 0,
+    "verified_independent_reproductions": 0,
+    "visitor_count": null,
+    "reproduction_conversion": null,
+    "paid_advertising_eur": 0
+  },
+  "rewards": {
+    "status": "inactive",
+    "available_eur": 0,
+    "payouts_eur": 0,
+    "payment_promised": false,
+    "policy_url": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/docs/participate.md#future-rewards"
+  }
+}
