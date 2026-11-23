@@ -1,0 +1,15 @@
+{
+  "owner_id": 360193814,
+  "registration_issue": 9,
+  "repository": "kevin975kevin/mehecske-beacon-mailbox-self-test",
+  "repository_id": 1468610673,
+  "reproduced": true,
+  "result": {
+    "distance": 4,
+    "shortest_paths": 4,
+    "task_id": "synthetic-shortest-path-v1"
+  },
+  "schema_version": 1,
+  "source_blob_sha": "aba723d646c31497abe77d19bf1271dc95069f1b",
+  "source_sha256": "9f1ca04e511a8b934d721ad10f70981779fb27016d7cb9381bc39fb1def66fd5"
+}
