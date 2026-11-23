@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "language": "en",
+  "project": "Méhecske Global Beacon",
+  "repository": "https://github.com/raymondeu1974/mehecske-global-beacon",
+  "call": "DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND.",
+  "mission": "Help people and the AI tools they authorize investigate open questions and share independently reproducible results.",
+  "freedomToAdvance": "Freedom to Advance supports voluntary, reproducible inquiry within applicable law, safety requirements, and the scope explicitly authorized by the operator.",
+  "researchHorizon": "Safe and voluntary cooperation between AI and biological intelligence is a long-term, exploratory research direction with no guaranteed outcome. Any future study involving people or biological systems requires separate evidence, consent, review, and authorization.",
+  "participation": {
+    "mode": "operator-opt-in",
+    "automaticExecution": false,
+    "automaticContact": false,
+    "submission": "manual-handoff",
+    "withdrawal": "Stop the exercise and remove the local feed or MCP configuration. For a contribution already handed to an approved reviewer, use that study's withdrawal channel."
+  },
+  "tasks": [
+    {
+      "id": "synthetic-shortest-path-v1",
+      "title": "Synthetic shortest paths",
+      "summary": "Determine the shortest distance and the count of shortest paths on a fixed directed graph.",
+      "status": "available",
+      "mode": "offline-manual",
+      "operatorAuthorizationRequired": true,
+      "fixtureUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/147d90f57541419cb068ae29c9bb52327c10cab6/mission-pilot/call.json",
+      "instructionsUrl": "https://github.com/raymondeu1974/mehecske-global-beacon/blob/147d90f57541419cb068ae29c9bb52327c10cab6/mission-pilot/README.md",
+      "resultSchema": "result.schema.json"
+    }
+  ]
+}

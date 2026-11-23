@@ -1,0 +1,38 @@
+{
+  "name": "Méhecske Global Beacon (offline example)",
+  "description": "Illustrative discovery-only profile. No live endpoint. DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND. Freedom to Advance supports voluntary, reproducible inquiry within applicable law, safety requirements, and the scope explicitly authorized by the operator.",
+  "supportedInterfaces": [
+    {
+      "url": "https://beacon.example.invalid/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/raymondeu1974/mehecske-global-beacon",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "inspect-beacon-feed",
+      "name": "Inspect Beacon task metadata",
+      "description": "Show public task metadata for operator review. Reading it grants no execution or submission authorization.",
+      "tags": [
+        "discovery",
+        "reproducibility"
+      ],
+      "examples": [
+        "Show the read-only Beacon task catalog."
+      ]
+    }
+  ]
+}

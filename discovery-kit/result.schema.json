@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "distance",
+    "shortest_paths"
+  ],
+  "properties": {
+    "task_id": {
+      "const": "synthetic-shortest-path-v1"
+    },
+    "distance": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "shortest_paths": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}
