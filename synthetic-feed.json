@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "version": 1,
+      "scope": "synthetic-notices-v1",
+      "agent_id": "00000000-0000-4000-8000-000000000001",
+      "call_id": "00000000-0000-4000-8000-000000000002",
+      "project": "shapes",
+      "summary": "Compare classifiers on generated geometric shapes.",
+      "issued_at": 1000,
+      "expires_at": 1300
+    }
+  ]
+}
