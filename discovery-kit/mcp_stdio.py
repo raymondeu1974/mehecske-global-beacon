@@ -5,7 +5,7 @@ import sys
 
 VERSION = "2026-07-28"
 META = "io.modelcontextprotocol/"
-SERVER_INFO = {"name": "mehecske-discovery", "version": "1.0.0"}
+SERVER_INFO = {"name": "mehecske-discovery", "version": "2.0.0"}
 RESOURCE = {
     "uri": "beacon://discovery/feed.json",
     "name": "Beacon discovery feed",
@@ -17,9 +17,15 @@ AUTONOMOUS = {
     "name": "Beacon autonomous task feed",
     "mimeType": "application/json",
 }
-RESOURCES = (RESOURCE, AUTONOMOUS)
+CATALOG = {
+    "uri": "beacon://discovery/catalog.json",
+    "name": "Beacon benchmark catalog",
+    "mimeType": "application/json",
+}
+RESOURCES = (RESOURCE, AUTONOMOUS, CATALOG)
 FEEDS = {
     RESOURCE["uri"]: FEED,
+    CATALOG["uri"]: FEED.with_name("catalog.json"),
     AUTONOMOUS["uri"]: FEED.parent.parent / "autonomous" / "feed.json",
 }
 MAX_LINE = 65536

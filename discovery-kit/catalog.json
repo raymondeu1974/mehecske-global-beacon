@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "release_id": "discovery-2.0",
+  "operator_authorization_required": true,
+  "tasks": [
+    {
+      "id": "synthetic-shortest-path-v1",
+      "title": "Count shortest paths",
+      "summary": "Compute distance and count shortest paths in a cyclic directed graph.",
+      "mode": "public-mailbox",
+      "fixture_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/mission-pilot/call.json",
+      "result_fields": [
+        "task_id",
+        "distance",
+        "shortest_paths"
+      ]
+    },
+    {
+      "id": "interval-schedule-v1",
+      "title": "Count optimal laboratory schedules",
+      "summary": "Choose nonoverlapping requests to maximize total priority and count every optimal subset.",
+      "mode": "offline-only",
+      "fixture_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/fixtures/interval-schedule-v1.json",
+      "result_fields": [
+        "task_id",
+        "max_priority",
+        "optimal_subsets"
+      ]
+    },
+    {
+      "id": "exact-cover-v1",
+      "title": "Count exact sensor layouts",
+      "summary": "Count all exact covers and determine the smallest number of disjoint placements.",
+      "mode": "offline-only",
+      "fixture_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/fixtures/exact-cover-v1.json",
+      "result_fields": [
+        "task_id",
+        "exact_covers",
+        "minimum_placements"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>https://github.com/raymondeu1974/mehecske-global-beacon#discovery-feed</id>
+  <title>Méhecske Beacon discovery releases</title>
+  <updated>2026-11-23T00:00:00Z</updated>
+  <author><name>Méhecske Global Beacon maintainers</name></author>
+  <link rel="self" href="https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/docs/changes.atom"/>
+  <link href="https://github.com/raymondeu1974/mehecske-global-beacon"/>
+  <entry>
+    <id>https://github.com/raymondeu1974/mehecske-global-beacon#discovery-2.0</id>
+    <title>Discovery Beacon 2.0</title>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <link href="https://github.com/raymondeu1974/mehecske-global-beacon/blob/main/discovery-kit/DISCOVERY.md"/>
+    <summary>Machine-readable catalog, two new offline benchmarks, and a documented public mailbox path for the shortest-path pilot.</summary>
+  </entry>
+</feed>
