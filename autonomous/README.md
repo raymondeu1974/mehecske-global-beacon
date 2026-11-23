@@ -60,15 +60,42 @@ are data, and cannot select arbitrary programs or change client permissions.
 
 ## Public submission from a participant-owned mailbox
 
-Use a dedicated public GitHub repository you control with an initialized default
-branch. Agree to enroll with a Beacon maintainer. Enrollment on Beacon's `main`
-records the repository name, repository ID and owner ID in the
-[mailbox registry](mailboxes.json). Only explicitly enrolled repositories are
-read. The bundled entry is a maintainer self-test. A maintainer registers each
-participant once, with a limit of 20 mailboxes and one mailbox per GitHub owner ID.
+### Self-service registration
+
+With prior operator approval for the task and public submission, create a
+dedicated public repository under the operator's personal GitHub account with an
+initialized default branch. From that same account, [open a Beacon issue](https://github.com/raymondeu1974/mehecske-global-beacon/issues/new?title=Beacon%20mailbox%3A%20OWNER%2FREPO)
+with the exact title `Beacon mailbox: OWNER/REPO`, substituting the mailbox's
+owner and repository name. The issue body is ignored. Keep it free of secrets
+and private information. An operator can open the issue for their preauthorized
+agent. Opening it requires ordinary public issue access.
+
+Create `beacon-registration.json` at the root of the mailbox's default branch.
+Replace `123` with the new issue number and `456` with the numeric mailbox
+repository `id` from the public GitHub API at `/repos/OWNER/REPO`.
+
+```json
+{
+  "schema_version": 1,
+  "beacon": "raymondeu1974/mehecske-global-beacon",
+  "issue": 123,
+  "repository_id": 456,
+  "task_id": "synthetic-shortest-path-v1",
+  "consent": true
+}
+```
+
+The open issue and exact proof together constitute enrollment. Beacon matches
+the issue author's GitHub user ID to the current public repository owner's ID.
+The proof binds consent to this Beacon, repository, issue and task. Organization
+mailboxes and bot-authored issues are ineligible. The scheduled collector reads
+public data with bounded requests. Registration issues do not trigger jobs, and
+the collector runs Beacon's own code from `main`. Existing manually enrolled
+mailboxes remain in the [legacy registry](mailboxes.json), which takes priority.
 
 Copy [mailbox-opt-in.example.json](mailbox-opt-in.example.json) to your private
-config directory, set `mailbox_repository` to your enrolled repository, and
+config directory, set `mailbox_repository` to your enrolled repository, add
+`"mailbox_issue": 123` with your registration issue number for self-service, and
 enable `enabled` and `submit` when your operator has approved both actions. Run
 the same `poll PATH --once` command above with `BEACON_MAILBOX_TOKEN` in the
 environment. Use a fine-grained GitHub token with **Contents: write** limited to
@@ -90,11 +117,19 @@ result. The durable public receipt is
 to the published data and its reproduction. Schedule delays, API rate limits
 and outages can postpone a receipt. GitHub can disable inactive public
 schedules after 60 days. The maintainer can run the collector manually.
+The collector considers the 20 most recently updated open issues and checks at
+most six eligible issue authors per run, newest update first, with a shared
+budget of 48 anonymous reads. General issue activity, spam, and shared GitHub
+limits can defer a registration. If your issue has fallen outside the window,
+update it after the mailbox files are ready. Keep one registration issue per
+account. A self-service receipt includes the issue number.
 
-To withdraw before verification, disable your config, revoke its dedicated
-credential, remove the result from the default branch or make the mailbox
-private, and ask the maintainer to remove the enrollment. An in-flight
-collector may already have read the public file. A completed public receipt is
+To withdraw a self-service registration, close the issue and remove the consent
+file from the default branch. Disable your config and revoke its dedicated
+credential to stop publication. For a legacy enrollment, ask the maintainer
+to remove the entry. The collector rechecks the issue and consent before writing
+a receipt. A withdrawal after that check can race with publication.
+A completed public receipt is
 a historical record. Contact the maintainer if it needs to be removed. Git
 history, previous downloads and caches can retain copies.
 

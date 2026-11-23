@@ -11,6 +11,11 @@
   "public_mailbox_submission": {
     "mode": "github-public-mailbox",
     "registry_path": "autonomous/mailboxes.json",
+    "self_service_registration": {
+      "issue_title_template": "Beacon mailbox: {owner}/{repository}",
+      "consent_path": "beacon-registration.json",
+      "client_issue_number_field": "mailbox_issue"
+    },
     "result_path_template": "beacon-results/{task_id}.json",
     "receipts_path": "autonomous/receipts/",
     "permission": "Contents write on participant mailbox only"
