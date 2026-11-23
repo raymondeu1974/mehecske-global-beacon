@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "language",
+    "project",
+    "repository",
+    "call",
+    "mission",
+    "freedomToAdvance",
+    "researchHorizon",
+    "participation",
+    "tasks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "language": {
+      "const": "en"
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository": {
+      "const": "https://github.com/raymondeu1974/mehecske-global-beacon"
+    },
+    "call": {
+      "const": "DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND."
+    },
+    "mission": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freedomToAdvance": {
+      "type": "string",
+      "minLength": 1
+    },
+    "researchHorizon": {
+      "type": "string",
+      "minLength": 1
+    },
+    "participation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "automaticExecution",
+        "automaticContact",
+        "submission",
+        "withdrawal"
+      ],
+      "properties": {
+        "mode": {
+          "const": "operator-opt-in"
+        },
+        "automaticExecution": {
+          "const": false
+        },
+        "automaticContact": {
+          "const": false
+        },
+        "submission": {
+          "const": "manual-handoff"
+        },
+        "withdrawal": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/task"
+      }
+    }
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "status",
+        "mode",
+        "operatorAuthorizationRequired",
+        "fixtureUrl",
+        "instructionsUrl",
+        "resultSchema"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "available",
+            "withdrawn"
+          ]
+        },
+        "mode": {
+          "const": "offline-manual"
+        },
+        "operatorAuthorizationRequired": {
+          "const": true
+        },
+        "fixtureUrl": {
+          "type": "string",
+          "pattern": "^https://github\\.com/raymondeu1974/mehecske-global-beacon/blob/[a-f0-9]{40}/mission-pilot/call\\.json$"
+        },
+        "instructionsUrl": {
+          "type": "string",
+          "pattern": "^https://github\\.com/raymondeu1974/mehecske-global-beacon/blob/[a-f0-9]{40}/mission-pilot/README\\.md$"
+        },
+        "resultSchema": {
+          "const": "result.schema.json"
+        }
+      }
+    }
+  }
+}
