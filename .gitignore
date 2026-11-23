@@ -2,3 +2,7 @@ __pycache__/
 *.sqlite3
 *.sqlite3-*
 .env
+
+# Agent Magnet local approval and observations
+market-opt-in.local.json
+market-observations.local.jsonl

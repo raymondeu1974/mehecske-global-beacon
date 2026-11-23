@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "btc-usdc-top-of-book-v1",
+  "status": "pilot",
+  "instructions": "README.md",
+  "client": "magnet.py",
+  "consent": "opt-in.example.json",
+  "mode": "operator-opt-in-read-only",
+  "poll_seconds": 3600,
+  "max_runtime_seconds": 30,
+  "authorization_days": 7,
+  "max_market_requests_per_run": 2,
+  "research_budget_usdc": 173,
+  "trade_permission": false,
+  "automatic_submission": false,
+  "reward": {
+    "pilot_reward_usdc": 0,
+    "funded_pool_usdc": 0,
+    "guaranteed": false
+  }
+}
