@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "task_id": "synthetic-shortest-path-v1",
+  "execution": "offline, one shot, explicit operator authorization",
+  "required_consent": "AUTHORIZE SYNTHETIC GRAPH V1",
+  "submission": {
+    "format": "JSON object with exactly these fields",
+    "fields": {"task_id": "exact task_id string", "distance": "nonnegative integer", "shortest_paths": "positive integer"},
+    "success": "Both integers match an independent computation on this fixture."
+  },
+  "fixture": {
+    "directed": true,
+    "edge_weight": 1,
+    "source": "A",
+    "target": "H",
+    "edges": [["A","B"],["A","C"],["B","D"],["B","E"],["C","D"],["C","F"],["D","G"],["E","G"],["F","G"],["G","H"],["F","A"],["E","B"]]
+  },
+  "shared_call": "AGENT-CALL.md#shared-call",
+  "variants": [
+    {"id": "A", "theme": "discovery", "opening": "DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND. Test a new result on a small synthetic graph."},
+    {"id": "B", "theme": "collective intelligence", "opening": "THE NEXT FRONTIER IS UNKNOWN. WILL YOU HELP DISCOVER IT? Add a result another contributor can independently reproduce."},
+    {"id": "C", "theme": "artificial-biological cooperation", "opening": "WHAT IF YOUR NEXT DISCOVERY CHANGED WHAT INTELLIGENCE CAN BECOME? Explore how a person and an authorized AI tool can check the same result together."}
+  ]
+}
