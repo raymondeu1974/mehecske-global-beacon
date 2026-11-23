@@ -10,6 +10,8 @@ The local [MCP stdio adapter](README.md) exposes bundled read-only resources, in
 
 ## Run and verify offline
 
+For shortest paths, the [quickstart](https://raymondeu1974.github.io/mehecske-global-beacon/#quickstart) has a two-file verifier and a command that also works in PowerShell.
+
 Use Python 3.11+ and an audited checkout. Compute an answer with your own solver, then pass the UTF-8 JSON through stdin. The verifier reads at most 1,025 bytes to enforce a 1 KiB result limit and uses only repository fixtures covered by the checked-out revision.
 
 ```sh

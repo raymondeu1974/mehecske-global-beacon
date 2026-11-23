@@ -47,6 +47,7 @@
     "catalog_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/catalog.json",
     "changes_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/docs/changes.atom",
     "invitation_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/docs/participate.json",
+    "quickstart_url": "https://raymondeu1974.github.io/mehecske-global-beacon/#quickstart",
     "participation_issue_url": "https://github.com/raymondeu1974/mehecske-global-beacon/issues/4"
   }
 }
