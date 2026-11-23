@@ -8,7 +8,10 @@ from unittest.mock import patch
 from urllib.error import HTTPError
 
 from beacon_runner import HERE, fixture, read_json, solve
-from public_mailbox import API, REGISTRY_URL, RESULT_PATH, collect, enrollment, publish
+from public_mailbox import (API, CONSENT_PATH, ISSUE_INDEX, ISSUES_URL, REGISTRY_URL,
+                            RESULT_PATH, ReadBudgetExhausted, bounded_reads, collect,
+                            enrollment, publish)
+from beacon_runner import REPO, TASK
 
 
 class MailboxTests(unittest.TestCase):
@@ -44,8 +47,11 @@ class MailboxTests(unittest.TestCase):
         self.assertEqual(limit, 4096)
         if self.published is None:
             raise HTTPError(url, 404, "Not found", {}, None)
-        raw = self.published
-        return {"type": "file", "path": RESULT_PATH, "encoding": "base64",
+        return self.blob(RESULT_PATH, self.published)
+
+    @staticmethod
+    def blob(path, raw):
+        return {"type": "file", "path": path, "encoding": "base64",
                 "size": len(raw), "content": base64.b64encode(raw).decode(),
                 "sha": hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()}
 
@@ -82,3 +88,71 @@ class MailboxTests(unittest.TestCase):
             publish(self.result, {"mailbox_repository": "other/results"}, api=self.api)
         with self.assertRaisesRegex(ValueError, "Duplicate"):
             enrollment({**self.registry, "mailboxes": [self.entry, self.entry]})
+
+    def configure_issue(self):
+        self.registry["mailboxes"] = []
+        self.metadata["owner"]["type"] = "User"
+        self.metadata["archived"] = False
+        self.issue = {"number": 7, "title": f"Beacon mailbox: {self.repo}", "state": "open",
+                      "user": {"id": 5, "login": "researcher", "type": "User"}}
+        self.live_issue = self.issue
+        self.proof = {"schema_version": 1, "beacon": REPO, "issue": 7,
+                      "repository_id": 3, "task_id": TASK, "consent": True}
+        self.published = json.dumps(self.result).encode()
+
+    def issue_api(self, url, **kwargs):
+        if url == ISSUE_INDEX:
+            return [self.issue, self.issue]
+        if url == f"{ISSUES_URL}/7":
+            return self.live_issue
+        if url == f"{self.repo_api}/contents/{CONSENT_PATH}":
+            return self.blob(CONSENT_PATH, json.dumps(self.proof).encode())
+        return self.api(url, **kwargs)
+
+    def test_self_service_publish_collect_and_deduplicate(self):
+        self.configure_issue()
+        with patch.dict("os.environ", {"BEACON_MAILBOX_TOKEN": "mailbox-only"}):
+            publish(self.result, {"mailbox_repository": self.repo, "mailbox_issue": 7},
+                    api=self.issue_api)
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        receipt = read_json(self.receipts / "5.json")
+        self.assertTrue(receipt["reproduced"])
+        self.assertEqual(receipt["registration_issue"], 7)
+        self.calls.clear()
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        self.assertEqual(self.calls, [])
+
+    def test_self_service_rejects_spoofed_owner_and_unsafe_path(self):
+        self.configure_issue()
+        self.issue["title"] = "Beacon mailbox: researcher/.."
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        self.assertEqual(self.calls, [])
+        self.issue["title"] = f"Beacon mailbox: {self.repo}"
+        self.issue["user"]["id"] = 6
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        self.assertNotIn(self.content_api, self.calls)
+        self.assertEqual(list(self.receipts.iterdir()), [])
+
+    def test_self_service_requires_exact_consent_and_current_issue(self):
+        self.configure_issue()
+        self.proof["consent"] = 1
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        self.assertNotIn(self.content_api, self.calls)
+        self.proof["consent"] = True
+        self.live_issue = {**self.issue, "state": "closed"}
+        collect(self.registry, self.feed, self.receipts, api=self.issue_api, self_service=True)
+        self.assertIn(self.content_api, self.calls)
+        self.assertEqual(list(self.receipts.iterdir()), [])
+
+    def test_read_budget_and_rate_limit(self):
+        get = bounded_reads(lambda url: url)
+        for _ in range(48):
+            self.assertEqual(get(ISSUE_INDEX), ISSUE_INDEX)
+        with self.assertRaises(ReadBudgetExhausted):
+            get(ISSUE_INDEX)
+
+        def limited(url):
+            raise HTTPError(url, 429, "Rate limited", {}, None)
+
+        with self.assertRaises(ReadBudgetExhausted):
+            bounded_reads(limited)(ISSUE_INDEX)
