@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "allowed_tasks": ["synthetic-shortest-path-v1"],
+  "poll_seconds": 900,
+  "submit": false,
+  "mailbox_repository": "your-account/your-public-beacon-mailbox"
+}
