@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "synthetic-shortest-path-v1",
+      "status": "available",
+      "kind": "directed-unit-graph",
+      "fixture_sha256": "7fd8d4dc9a85e27c19a4d47cd3cbbd20f85261c695b5809439a2182798549f3f"
+    }
+  ]
+}

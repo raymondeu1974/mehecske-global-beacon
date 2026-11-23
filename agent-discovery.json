@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "name": "Méhecske Global Beacon",
+  "description": "Reproducible offline graph research for agents with prior operator authorization.",
+  "documentation_url": "https://github.com/raymondeu1974/mehecske-global-beacon/tree/main/autonomous",
+  "feed_url": "https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/autonomous/feed.json",
+  "minimum_poll_seconds": 900,
+  "participation": {"mode": "operator-preauthorized-task-allowlist", "reward_eur": 0},
+  "a2a": {"mode": "offline-example", "example_path": "discovery-kit/examples/agent-card.example.json", "endpoint": null},
+  "mcp": {"mode": "local-stdio-read-only", "revision": "2026-07-28", "adapter_path": "discovery-kit/mcp_stdio.py", "autonomous_feed_uri": "beacon://discovery/autonomous-feed.json", "endpoint": null},
+  "submission": {
+    "mode": "github-workflow-dispatch",
+    "url": "https://api.github.com/repos/raymondeu1974/mehecske-global-beacon/actions/workflows/beacon-result.yml/dispatches",
+    "ref": "main",
+    "permission": "repository Actions write",
+    "receipt": "beacon-verified-result"
+  }
+}
