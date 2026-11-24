@@ -61,26 +61,57 @@ participation has yet to be demonstrated.
 
 ## Release only after separate approval
 
-1. Verify the release commit and confirm distribution rights before PyPI
-   publication. The source repository currently has no explicit license file.
-   Recheck the normalized [PyPI project name](https://pypi.org/project/mehecske-connect/)
-   and confirm control of the project or eligibility to create it. A 404
-   means there is no public project at that URL and does not reserve the name.
-2. Build both distributions with `python -m build`, run
-   `python -m twine check --strict dist/*`, and run the installed-wheel SDK
-   checks. Keep the distribution name and package version in sync with
+### Resolve distribution rights
+
+The repository has no explicit license file. Before building a public release,
+the rights holder must confirm permission to distribute every file in both
+the wheel and the sdist, including the Gateway, verifiers, fixtures, skill,
+and documentation. Review the contributor history and source of bundled files,
+including files included only in the sdist. Record the applicable license and
+required notices in the repository, declare the corresponding package license
+metadata, and inspect both archives for the expected license and notice files.
+If any item cannot be cleared, obtain permission or remove or replace it in a
+reviewed change before any upload.
+
+### PyPI
+
+1. Check the [normalized PyPI project name](https://pypi.org/project/mehecske-connect/).
+   If the project exists, its owner must configure Trusted Publishing or grant
+   the required access. For a new project, a PyPI account holder can configure
+   a [pending Trusted Publisher](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/).
+   A missing public project page does not reserve the name.
+2. Review a separate GitHub Actions release workflow, for example
+   `.github/workflows/publish-pypi.yml`. Use manual dispatch from the reviewed
+   release ref and bind the publisher to
+   `raymondeu1974/mehecske-global-beacon`, the exact workflow filename, and
+   the `pypi` environment. A repository administrator configures the environment
+   and its branch or tag restrictions. Build and test in a job with read-only
+   repository access. Grant `id-token: write` only to the publish job, which
+   uploads the tested wheel and sdist using
+   [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/using-a-publisher/).
+3. On the reviewed release commit run `python -m build`,
+   `python -m twine check --strict dist/*`, and the installed-wheel MCP SDK
+   checks outside the checkout. Verify the archive contents and record their
+   SHA-256 hashes. Keep the package name and version aligned with
    [server.json](../server.json). The PyPI description must carry the
    `mcp-name: io.github.raymondeu1974/mehecske-connect` marker from the README.
-3. After explicit PyPI approval, upload the exact reviewed wheel and sdist
-   using `python -m twine upload dist/*` from a clean release directory.
-   Confirm the published version and the description marker in PyPI metadata.
-   Only then use the index-based command `uvx mehecske-connect@0.1.0`.
-4. After separate MCP Registry approval, authenticate the official
-   `mcp-publisher login github` as the owner of the `raymondeu1974` GitHub
-   namespace. Validate the manifest against its declared schema and the official
-   Registry's validation API, then run `mcp-publisher publish` from the checkout
-   root. Verify the server entry and version before updating the discovery
-   release status. The CI workflow builds and tests artifacts only.
+4. After explicit PyPI approval, run the reviewed workflow and verify the public
+   version, description marker, and artifact hashes. Test an MCP initialization
+   using `uvx mehecske-connect@0.1.0` from a clean environment.
+
+### MCP Registry
+
+1. After verifying the public PyPI release, validate the same release's
+   `server.json` against its declared schema. Confirm the Registry name,
+   package version, and current Registry listing for that name.
+2. After separate MCP Registry approval, authenticate as the owner of the
+   `raymondeu1974` personal GitHub namespace using the official
+   `mcp-publisher login github` device flow. The Registry also supports
+   GitHub Actions OIDC from an authorized repository. Publish the reviewed
+   manifest using `mcp-publisher publish`.
+3. Verify the exact server name and version via the public Registry API, then
+   update the discovery manifest and installation guide to reflect the confirmed
+   release.
 
 References: [MCP Registry publishing](https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/quickstart.mdx),
 [namespace authentication](https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/authentication.mdx),
