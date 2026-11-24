@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.raymondeu1974/mehecske-connect",
+  "description": "Offline Méhecske Arena tasks and reproducible receipts over operator-approved stdio.",
+  "repository": {
+    "url": "https://github.com/raymondeu1974/mehecske-global-beacon",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "mehecske-connect",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

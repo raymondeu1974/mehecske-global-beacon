@@ -48,6 +48,13 @@
     "mode": "local-stdio",
     "manifest_path": "discovery-kit/gateway.json"
   },
+  "mehecske_connect": {
+    "mode": "local-stdio",
+    "release_status": "unpublished",
+    "guide_path": "discovery-kit/CONNECT.md",
+    "registry_manifest_path": "server.json",
+    "skill_path": "skills/mehecske-agent-gateway/SKILL.md"
+  },
   "discovery": {
     "version": "2.0",
     "release_id": "discovery-2.0",
