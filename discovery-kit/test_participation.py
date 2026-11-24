@@ -22,6 +22,23 @@ class ParticipationTests(unittest.TestCase):
         self.assertTrue(consent["separate_approval_to_publish_required"])
         self.assertFalse(consent["offline_run_requires_registration"])
 
+    def test_landing_and_readme_expose_gateway_discovery(self):
+        discovery = json.loads((ROOT / "agent-discovery.json").read_text(encoding="utf-8"))
+        manifest_path = discovery["agent_gateway"]["manifest_path"]
+        gateway = json.loads((ROOT / manifest_path).read_text(encoding="utf-8"))
+        landing = (ROOT / "docs/index.html").read_text(encoding="utf-8")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        repo = "raymondeu1974/mehecske-global-beacon"
+        manifest_url = f"https://raw.githubusercontent.com/{repo}/main/{manifest_path}"
+        blob = f"https://github.com/{repo}/blob/main/"
+        self.assertIn(f'rel="alternate" type="application/json" title="Agent Gateway manifest" href="{manifest_url}"', landing)
+        self.assertIn(f'href="{manifest_url}"', landing.split("<body>", 1)[1])
+        for path in (manifest_path, gateway["guide_path"], gateway["skill_path"]):
+            self.assertTrue((ROOT / path).is_file(), path)
+            self.assertIn(f"]({path})", readme)
+        for key in ("guide_path", "skill_path"):
+            self.assertIn(f'href="{blob}{gateway[key]}"', landing)
+
     def test_baseline_and_inactive_rewards(self):
         invitation = json.loads((ROOT / "docs/participate.json").read_text(encoding="utf-8"))
         baseline = invitation["baseline"]

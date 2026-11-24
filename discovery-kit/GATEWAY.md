@@ -9,6 +9,17 @@ from the same Git revision. The manifest uses repository-relative paths.
 
 1. Obtain and review a clean checkout pinned to a full Git commit containing
    this guide. Use Python 3.11 or newer. The gateway uses the standard library.
+
+   ```sh
+   git clone https://github.com/raymondeu1974/mehecske-global-beacon.git
+   cd mehecske-global-beacon
+   git checkout --detach <reviewed-full-commit-sha>
+   ```
+
+   For a PR preview, take the full commit SHA from its Commits tab. Use that
+   revision for the server, manifest and Skill. On public GitHub, start at the
+   [project landing page](https://raymondeu1974.github.io/mehecske-global-beacon/)
+   or the repository README to find all three.
 2. Register the command below in a client that supports MCP `2025-11-25` over
    stdio. Replace both paths with absolute paths on your machine. Run the
    executable directly from the client. Windows users can use forward slashes
@@ -67,8 +78,37 @@ python -B -m unittest discover -s mission-pilot -v
 python -B -m unittest -v
 ```
 
-The gateway test starts a real subprocess and exchanges newline-delimited
-MCP requests and responses. It exercises initialization, tool discovery,
-all three tasks, invalid requests, approval and receipt rechecks. It uses
-an in-repository test client. Independent external agent participation
-requires an operator to connect their own client and reproduce a task.
+For the official [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
+check, create an isolated environment. Activate it with `source .venv/bin/activate`
+on macOS or Linux, or use `.venv/Scripts/python.exe` in place of `python`
+for the install and test commands on Windows.
+
+```sh
+python -m venv .venv
+# Activate the environment, or use its Python executable for both commands.
+python -m pip install "mcp==1.26.0"
+python -B discovery-kit/check_gateway_sdk.py -v
+```
+
+This check starts the gateway as a local stdio subprocess, negotiates the
+protocol with `ClientSession.initialize`, lists tools, and calls them for all
+three tasks. It compares receipts with the Arena CLI, rejects altered receipts
+and checks denial with empty and partial allowlists. The SDK is a test-only
+dependency. A separate wire-level test covers invalid JSON-RPC requests.
+Independent participation requires a separate operator to connect their own
+client and reproduce a task.
+
+## Official MCP Registry
+
+A future listing can preserve local stdio. One option is a versioned public
+PyPI package containing the launch entry point and bundled fixtures.
+Use a name such as `io.github.raymondeu1974/mehecske-agent-gateway` if
+publishing with authorization for that GitHub namespace. Include the matching
+`mcp-name:` marker in the package README and describe the published version
+and stdio transport in a schema-valid `server.json`. An authorized publisher
+then authenticates the namespace and submits the metadata with
+`mcp-publisher`. The [package requirements](https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/package-types.mdx)
+and [publishing quickstart](https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/quickstart.mdx)
+describe the validation and submission steps. This gateway is distributed
+as a source checkout. Its discovery manifest and Agent Skill are project
+discovery files. Neither publishes a Registry entry.
