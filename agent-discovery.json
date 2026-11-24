@@ -44,6 +44,10 @@
     "mode": "offline",
     "manifest_path": "discovery-kit/arena.json"
   },
+  "agent_gateway": {
+    "mode": "local-stdio",
+    "manifest_path": "discovery-kit/gateway.json"
+  },
   "discovery": {
     "version": "2.0",
     "release_id": "discovery-2.0",

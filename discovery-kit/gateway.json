@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "mehecske-agent-gateway",
+  "version": "1.0.0",
+  "guide_path": "discovery-kit/GATEWAY.md",
+  "skill_path": "skills/mehecske-agent-gateway/SKILL.md",
+  "arena_manifest_path": "discovery-kit/arena.json",
+  "mcp": {
+    "transport": "stdio",
+    "endpoint": null,
+    "protocol_version": "2025-11-25",
+    "command": "python",
+    "args": ["-B", "discovery-kit/gateway_stdio.py"],
+    "path_base": "repository-root",
+    "python_minimum": "3.11",
+    "tools": ["list_tasks", "get_task", "verify_result", "recheck_receipt"]
+  },
+  "participation": {
+    "default_approved_task_ids": [],
+    "operator_approval_flag": "--approve-task",
+    "approval_scope": "task-id-per-process",
+    "automatic_publication": false
+  }
+}
