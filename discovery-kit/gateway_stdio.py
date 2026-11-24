@@ -56,8 +56,9 @@ def result_content(value, *, error=False):
 
 
 class Gateway:
-    def __init__(self, approved):
-        self.approved = approved
+    def __init__(self, approved, allowed_tools):
+        self.approved = frozenset(approved)
+        self.allowed_tools = frozenset(allowed_tools)
         self.negotiated = False
         self.ready = False
 
@@ -119,10 +120,10 @@ class Gateway:
         elif method == "tools/list":
             if "cursor" in params:
                 return failure(request_id, -32602, "Unknown pagination cursor")
-            result = {"tools": list(TOOLS.values())}
+            result = {"tools": [tool for name, tool in TOOLS.items() if name in self.allowed_tools]}
         elif method == "tools/call":
             name = params.get("name")
-            if not isinstance(name, str) or name not in TOOLS:
+            if not isinstance(name, str) or name not in self.allowed_tools:
                 return failure(request_id, -32602, "Unknown tool")
             try:
                 result = result_content(self.call(name, params.get("arguments", {})))
@@ -139,7 +140,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--approve-task", choices=TASKS, action="append", default=[],
                         help="Enable one task for this session after explicit operator approval")
-    gateway = Gateway(set(parser.parse_args().approve_task))
+    parser.add_argument("--allow-tool", choices=TOOLS, action="append",
+                        help="Restrict this session to the named tool(s); repeat to enable more")
+    options = parser.parse_args()
+    gateway = Gateway(options.approve_task, TOOLS if options.allow_tool is None else options.allow_tool)
     while line := sys.stdin.buffer.readline(MAX_LINE + 1):
         if len(line) > MAX_LINE:
             while line and not line.endswith(b"\n"):

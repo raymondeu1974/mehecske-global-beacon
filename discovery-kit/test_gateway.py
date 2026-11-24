@@ -13,10 +13,12 @@ SERVER = ROOT / "discovery-kit/gateway_stdio.py"
 
 
 class GatewayTests(unittest.TestCase):
-    def start(self, approved=()):
+    def start(self, approved=(), allowed_tools=()):
         command = [sys.executable, "-B", str(SERVER)]
         for task_id in approved:
             command.extend(("--approve-task", task_id))
+        for name in allowed_tools:
+            command.extend(("--allow-tool", name))
         process = subprocess.Popen(command, cwd=ROOT.parent, stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.process = process
@@ -118,6 +120,16 @@ class GatewayTests(unittest.TestCase):
                 self.assertEqual(receipt, json.loads(cli.stdout))
                 self.assertEqual(self.content("recheck_receipt", receipt=receipt), receipt)
                 self.assertTrue(self.call("recheck_receipt", receipt=receipt | {"receipt_sha256": "0" * 64})["isError"])
+
+    def test_tool_allowlist_applies_to_discovery_and_calls(self):
+        answer = RESULTS[0]
+        self.start([answer["task_id"]], ["list_tasks", "get_task"])
+        self.initialize()
+        tools = self.request("tools/list")["result"]["tools"]
+        self.assertEqual([tool["name"] for tool in tools], ["list_tasks", "get_task"])
+        self.assertTrue(self.content("get_task", task_id=answer["task_id"])["fixture"])
+        for name in ("verify_result", "recheck_receipt", "filesystem", "publish"):
+            self.assertEqual(self.request("tools/call", name=name)["error"]["code"], -32602)
 
     def test_invalid_input_and_allowlist(self):
         answer = RESULTS[0]

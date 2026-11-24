@@ -112,3 +112,10 @@ and [publishing quickstart](https://github.com/modelcontextprotocol/registry/blo
 describe the validation and submission steps. This gateway is distributed
 as a source checkout. Its discovery manifest and Agent Skill are project
 discovery files. Neither publishes a Registry entry.
+
+To limit a session further, pass repeatable `--allow-tool <name>` options in
+the operator-controlled server command. The Gateway advertises and accepts
+only the named tools in that session. A tool grant never grants a task; pass
+`--approve-task <id>` separately for fixture access, verification, or rechecks.
+For example, combine `--allow-tool list_tasks --allow-tool get_task` to allow
+discovery and fixture access with no verification tools.
