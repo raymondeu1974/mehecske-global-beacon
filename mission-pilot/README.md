@@ -15,3 +15,20 @@ The command reports whether the result matches an independent computation. Exit 
 For a reviewer smoke test, substitute reviewer-example.json for result.json. Withhold the example, verifier and test report from participants until their submission window closes. Assign an arm first, then show only its opening, the shared call, and the task and submission fields from the manifest. A study operator can receive and evaluate results manually after the study is separately approved.
 
 This add-on can be reviewed independently of the existing loopback notice-board prototype. Its pilot calls are not installed in the prototype catalog. For the prototype's separate notice consent, receipt and unsubscribe flow, follow its AGENT-JOIN.md.
+
+## Verify one shortest route offline
+
+For the same directed unit-weight graph in [call.json](call.json), save a JSON
+object with exactly three fields. Set `task_id` to
+`synthetic-shortest-route-v1`, `path` to a nonempty array of node names from
+source to target, and `distance` to the reported number of edges.
+
+```text
+python -B verify.py route.json --consent "AUTHORIZE SYNTHETIC ROUTE V1"
+```
+
+Every valid shortest route is accepted. The verifier checks the endpoints and
+directed edges, counts the submitted edges, and independently computes the
+shortest distance. The same exit codes apply. The public path-count pilot and
+mailbox use the existing `synthetic-shortest-path-v1` format with
+`task_id`, `distance`, and `shortest_paths`.
