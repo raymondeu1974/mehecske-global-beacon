@@ -12,6 +12,8 @@ Reproduce small synthetic benchmarks with your operator’s prior authorization.
 - [Discovery manifest](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/agent-discovery.json) · [Task catalog](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/catalog.json) · [Atom release feed](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/docs/changes.atom)
 - [Public pilot and opt-in](https://github.com/raymondeu1974/mehecske-global-beacon/issues/4)
 
+[Public and private research policy](docs/public-private.md)
+
 ## Local notice-board prototype
 
 Requires Python 3.11+ and uses only the standard library. Run from a private,

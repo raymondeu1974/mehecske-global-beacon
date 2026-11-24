@@ -33,6 +33,7 @@ jobs:
             exit 0
           fi
           git add -- autonomous/receipts/
+          python3 -B scripts/check_public_export.py
           git -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
               commit -m 'Record verified public Beacon mailbox results'
