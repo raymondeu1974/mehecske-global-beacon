@@ -49,11 +49,11 @@ def tracked_files():
         if not entry:
             continue
         metadata, path = entry.split("\t", 1)
-        mode, _, stage = metadata.split()
+        mode, object_id, stage = metadata.split()
         require(mode in {"100644", "100755"} and stage == "0", "Non-regular or unmerged Git entry")
-        file = ROOT / path
-        require(file.is_file() and file.resolve() == file, "Non-regular checkout path")
-        yield path, file.read_bytes()
+        size = subprocess.check_output(["git", "cat-file", "-s", object_id], cwd=ROOT)
+        require(int(size) <= MAX_FILE_BYTES, "Oversized staged Git blob")
+        yield path, subprocess.check_output(["git", "cat-file", "blob", object_id], cwd=ROOT)
 
 
 def check_receipt(owner, data):
@@ -83,12 +83,12 @@ def check_receipt(owner, data):
         raise ValueError("Invalid generated public mailbox receipt") from None
 
 
-def check_tree(policy):
+def check_tree(policy, staged):
     files = {}
     reviewed = policy["checkout"]
     seen = set()
     manifest_seen = False
-    for path, raw in tracked_files():
+    for path, raw in staged.items():
         if path == MANIFEST:
             manifest_seen = True
         elif match := RECEIPT.fullmatch(path):
@@ -149,11 +149,12 @@ def main():
     try:
         require(subprocess.run(["git", "diff", "--quiet", "--"], cwd=ROOT).returncode == 0,
                 "Stage intended changes before checking the checkout")
-        policy = json.loads(checked_data((ROOT / MANIFEST).read_bytes(), MANIFEST))
-        files = check_tree(policy)
+        staged = dict(tracked_files())
+        policy = json.loads(checked_data(staged[MANIFEST], MANIFEST))
+        files = check_tree(policy, staged)
         if args.dist is not None:
             check_dist(args.dist, policy, files)
-    except (ValueError, KeyError, TypeError, OSError, RuntimeError, tarfile.TarError, zipfile.BadZipFile) as exc:
+    except (ValueError, KeyError, TypeError, OSError, RuntimeError, subprocess.CalledProcessError, tarfile.TarError, zipfile.BadZipFile) as exc:
         # Exception strings from libraries can include input bytes or filenames.
         parser.exit(1, f"Public export rejected: {exc if type(exc) is ValueError else type(exc).__name__}\n")
     print(f"Public export passed ({len(files)} tracked files"

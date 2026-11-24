@@ -35,7 +35,7 @@ run it with a process identity that cannot read private workspaces or secrets.
    push a private branch, merge its history, or copy a private worktree or
    archive to the public remote. Review the staged diff before the first push,
    including commit messages, PR text, and filenames. Run
-   `python -B scripts/check_public_export.py` against a clean staged checkout.
+   `python -B scripts/check_public_export.py` against the Git index of a clean staged checkout.
    Add new files explicitly and update only reviewed paths in
    `public-export.json`. Hash UTF-8 bytes with CRLF normalized to LF.
 4. Have another maintainer review edits to the inventory, checker, packaging
