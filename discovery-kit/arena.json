@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "mehecske-agent-proof-arena-v1",
+  "mode": "offline",
+  "catalog_path": "discovery-kit/catalog.json",
+  "guide_path": "discovery-kit/ARENA.md",
+  "cli_path": "discovery-kit/arena.py",
+  "receipt_format": "mehecske-arena-receipt-v1",
+  "task_ids": [
+    "synthetic-shortest-path-v1",
+    "interval-schedule-v1",
+    "exact-cover-v1"
+  ],
+  "python_minimum": "3.11",
+  "operator_approval_required": true,
+  "public_sharing_optional": true,
+  "automatic_publication": false
+}

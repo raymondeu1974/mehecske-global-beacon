@@ -40,6 +40,10 @@
     "permission": "repository Actions write",
     "receipt": "beacon-verified-result"
   },
+  "agent_proof_arena": {
+    "mode": "offline",
+    "manifest_path": "discovery-kit/arena.json"
+  },
   "discovery": {
     "version": "2.0",
     "release_id": "discovery-2.0",
