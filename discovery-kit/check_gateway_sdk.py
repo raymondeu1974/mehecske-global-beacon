@@ -1,9 +1,12 @@
 """Smoke-test the gateway with the official MCP Python SDK."""
 import asyncio
 import json
+import os
 import sys
+import tempfile
 from contextlib import asynccontextmanager
 from datetime import timedelta
+from pathlib import Path
 import unittest
 
 from mcp import ClientSession, StdioServerParameters
@@ -14,13 +17,16 @@ from test_arena import RESULTS, ROOT, run
 
 @asynccontextmanager
 async def connect(manifest, approved=()):
-    args = [str(ROOT / manifest["mcp"]["args"][-1])]
+    installed = os.environ.get("MEHECSKE_CONNECT_TEST_ENTRYPOINT")
+    command = str(Path(installed).resolve()) if installed else sys.executable
+    args = [] if installed else ["-B", str(ROOT / manifest["mcp"]["args"][-1])]
     for task_id in approved:
         args.extend((manifest["participation"]["operator_approval_flag"], task_id))
-    server = StdioServerParameters(command=sys.executable, args=["-B", *args])
-    async with stdio_client(server) as (reader, writer):
-        async with ClientSession(reader, writer, read_timeout_seconds=timedelta(seconds=10)) as session:
-            yield session
+    with tempfile.TemporaryDirectory() as cwd:
+        server = StdioServerParameters(command=command, args=args, cwd=cwd)
+        async with stdio_client(server) as (reader, writer):
+            async with ClientSession(reader, writer, read_timeout_seconds=timedelta(seconds=10)) as session:
+                yield session
 
 
 class SDKInteropTests(unittest.IsolatedAsyncioTestCase):

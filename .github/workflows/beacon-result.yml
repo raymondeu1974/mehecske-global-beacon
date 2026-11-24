@@ -31,6 +31,16 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/mcp-sdk"
           "$RUNNER_TEMP/mcp-sdk/bin/python" -m pip install 'mcp==1.26.0'
           "$RUNNER_TEMP/mcp-sdk/bin/python" -B discovery-kit/check_gateway_sdk.py -v
+      - name: Build and test the installed Méhecske Connect wheel
+        run: |
+          python="$RUNNER_TEMP/mcp-sdk/bin/python"
+          "$python" -m pip install build twine
+          "$python" -m build --outdir "$RUNNER_TEMP/connect-dist"
+          "$python" -m twine check --strict "$RUNNER_TEMP/connect-dist/"*
+          "$python" -m pip install --no-index --no-deps "$RUNNER_TEMP/connect-dist/"*.whl
+          export MEHECSKE_CONNECT_TEST_ENTRYPOINT="$RUNNER_TEMP/mcp-sdk/bin/mehecske-connect"
+          "$MEHECSKE_CONNECT_TEST_ENTRYPOINT" --help
+          "$python" -B discovery-kit/check_gateway_sdk.py -v
 
   verify:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.run_attempt == 1

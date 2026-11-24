@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling==1.29.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mehecske-connect"
+version = "0.1.0"
+description = "Run the offline Méhecske Arena MCP Gateway over stdio"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/raymondeu1974/mehecske-global-beacon"
+
+[project.scripts]
+mehecske-connect = "mehecske_connect:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mehecske_connect"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"discovery-kit/gateway_stdio.py" = "mehecske_connect/_bundle/discovery-kit/gateway_stdio.py"
+"discovery-kit/mcp_stdio.py" = "mehecske_connect/_bundle/discovery-kit/mcp_stdio.py"
+"discovery-kit/arena.py" = "mehecske_connect/_bundle/discovery-kit/arena.py"
+"discovery-kit/verify_benchmark.py" = "mehecske_connect/_bundle/discovery-kit/verify_benchmark.py"
+"discovery-kit/catalog.json" = "mehecske_connect/_bundle/discovery-kit/catalog.json"
+"discovery-kit/fixtures" = "mehecske_connect/_bundle/discovery-kit/fixtures"
+"autonomous/beacon_runner.py" = "mehecske_connect/_bundle/autonomous/beacon_runner.py"
+"autonomous/feed.json" = "mehecske_connect/_bundle/autonomous/feed.json"
+"mission-pilot/call.json" = "mehecske_connect/_bundle/mission-pilot/call.json"
+"mission-pilot/verify.py" = "mehecske_connect/_bundle/mission-pilot/verify.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/pyproject.toml",
+  "/README.md",
+  "/server.json",
+  "/mehecske_connect",
+  "/discovery-kit",
+  "/autonomous/beacon_runner.py",
+  "/autonomous/feed.json",
+  "/mission-pilot/call.json",
+  "/mission-pilot/verify.py",
+  "/skills/mehecske-agent-gateway",
+]
