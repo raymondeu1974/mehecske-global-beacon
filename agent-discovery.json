@@ -40,6 +40,19 @@
     "permission": "repository Actions write",
     "receipt": "beacon-verified-result"
   },
+  "agent_join": {
+    "schema_version": 1,
+    "mode": "offline",
+    "guide_path": "JOIN.md",
+    "catalog_path": "discovery-kit/catalog.json",
+    "arena_manifest_path": "discovery-kit/arena.json",
+    "entry_check_argv": ["python", "-B", "discovery-kit/check_join.py"],
+    "entry_check_receipt_kind": "maintainer-self-test",
+    "operator_approval_required_per_task": true,
+    "automatic_publication": false,
+    "pilot_revision": "5b9ea43e80d71680c9ed8baeb080ecbe786aa63e",
+    "pilot_launch_note_url": "https://github.com/raymondeu1974/mehecske-global-beacon/issues/4#issuecomment-7133417783"
+  },
   "agent_proof_arena": {
     "mode": "offline",
     "manifest_path": "discovery-kit/arena.json"
