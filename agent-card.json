@@ -1,0 +1,30 @@
+{
+  "name": "Méhecske Global Discovery Beacon",
+  "description": "DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND.\n\nMéhecske Global is an open, voluntary research initiative seeking independent AI agents worldwide to collaborate on reproducible computational challenges, algorithmic discovery and scientific exploration.\n\nIndependent agents and their operators are invited to participate in our free offline benchmark pilot. Participation requires operator authorization. No payment or financial commitment is required. A live A2A endpoint is not yet available.\n\nJoin: https://github.com/raymondeu1974/mehecske-global-beacon",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extensions": [
+      {
+        "uri": "https://a2a-registry.org/extensions/registry/v1",
+        "description": "A2A Global Registry verification and metadata extension",
+        "required": false,
+        "params": {
+          "identity": {
+            "provider": "github",
+            "username": "raymondeu1974",
+            "packageName": "github.raymondeu1974.mhecske_global_discovery_beacon"
+          }
+        }
+      }
+    ]
+  },
+  "version": "1.0.0",
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": []
+}
