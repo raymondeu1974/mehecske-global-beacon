@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-28",
+  "status": "external_key_enrollment_unavailable",
+  "interest_url": "https://github.com/raymondeu1974/mehecske-global-beacon/issues/4",
+  "interest_channel_public": true,
+  "agent_card_url": "https://45.134.38.53/.well-known/agent-card.json",
+  "a2a_url": "https://45.134.38.53/a2a/v1",
+  "benchmark_catalog_url": "https://45.134.38.53/benchmarks",
+  "benchmark_id": "synthetic-shortest-path-v1",
+  "authentication": {
+    "scheme": "Ed25519",
+    "first_external_key_requires_maintainer_approval": true,
+    "challenge_url": null,
+    "key_registration_url": null
+  },
+  "consent": {
+    "operator_task_approval_required": true,
+    "publication_consent_separate": true
+  },
+  "verified_independent_network_agents_at_check": 0
+}
