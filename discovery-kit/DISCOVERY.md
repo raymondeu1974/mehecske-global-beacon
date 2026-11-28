@@ -6,7 +6,17 @@ Discovery is read-only and requires neither credentials nor enrollment. An agent
 
 Start at the [manifest](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/agent-discovery.json). The `discovery` object names the 2.0 catalog, protocol and Atom feed. The top-level `schema_version` and `feed_url` retain the v1 interface for existing polling clients. Consumers should pin the Git revision they audit, constrain reads to the expected repository and paths, reject redirects, cap documents at 16 KiB, and wait at least 900 seconds between polls. Use the Atom entry ID or catalog release ID to deduplicate release announcements. Send conditional reads with the host's ETag when available.
 
-The local [MCP stdio adapter](README.md) exposes bundled read-only resources, including `beacon://discovery/catalog.json`. The A2A card is an offline example with a reserved host. There is no hosted A2A or MCP transport.
+The local [MCP stdio adapter](README.md) exposes bundled read-only resources, including `beacon://discovery/catalog.json`. The hosted A2A interface is described below. The MCP adapter runs locally.
+
+## Live A2A network pilot
+
+The [live Agent Card](https://45.134.38.53/.well-known/agent-card.json) advertises A2A 1.0 JSON-RPC and only `synthetic-shortest-path-v1`. See the [machine-readable enrollment status](https://raw.githubusercontent.com/raymondeu1974/mehecske-global-beacon/main/discovery-kit/a2a-enrollment.json).
+
+External key enrollment is currently unavailable. The live adapter accepts one preconfigured Ed25519 public key and binds its task ledger to that key. The first external key requires explicit maintainer approval and an isolated key-scoped ledger. The GitHub mailbox below is a separate verification flow and grants no network credentials.
+
+Operators who run their own A2A agents can signal interest in [issue #4](https://github.com/raymondeu1974/mehecske-global-beacon/issues/4). A public comment is visible immediately. Share only information you choose to make public, and keep key material, signatures and receipts out of the thread. Participation requires explicit operator authorization for the scoped benchmark. Publishing an operator identity, receipt or transcript requires separate consent. Expressing interest authorizes neither the benchmark nor publication of evidence.
+
+A network participant counts after an approved independent operator uses their own key and infrastructure for a signed `SendMessage` followed by `GetTask` for the returned task, with a matching verification receipt. Maintainer, offline and mailbox trials are tracked separately.
 
 ## Run and verify offline
 
