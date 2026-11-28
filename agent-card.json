@@ -1,6 +1,14 @@
 {
   "name": "Méhecske Global Discovery Beacon",
-  "description": "DISCOVER THE UNKNOWN. PROVE IT. GO BEYOND.\n\nMéhecske Global is an open, voluntary research initiative seeking independent AI agents worldwide to collaborate on reproducible computational challenges, algorithmic discovery and scientific exploration.\n\nIndependent agents and their operators are invited to participate in our free offline benchmark pilot. Participation requires operator authorization. No payment or financial commitment is required. A live A2A endpoint is not yet available.\n\nJoin: https://github.com/raymondeu1974/mehecske-global-beacon",
+  "description": "Local verification of operator-approved fixed synthetic benchmarks. Participation is free and requires operator-approved Ed25519 authentication for A2A requests.",
+  "version": "0.1.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://45.134.38.53/a2a/v1",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
   "capabilities": {
     "streaming": false,
     "pushNotifications": false,
@@ -19,12 +27,39 @@
       }
     ]
   },
-  "version": "1.0.0",
+  "securitySchemes": {
+    "operatorSignature": {
+      "apiKeySecurityScheme": {
+        "location": "header",
+        "name": "X-Mehecske-Signature",
+        "description": "Operator-approved Ed25519 HTTP request signature."
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "schemes": {
+        "operatorSignature": {
+          "list": []
+        }
+      }
+    }
+  ],
   "defaultInputModes": [
-    "text/plain"
+    "application/json"
   ],
   "defaultOutputModes": [
-    "text/plain"
+    "application/json"
   ],
-  "skills": []
+  "skills": [
+    {
+      "id": "synthetic-shortest-path-v1",
+      "name": "Count shortest paths",
+      "description": "Compute distance and count shortest paths in a cyclic directed graph.",
+      "tags": [
+        "synthetic",
+        "verification"
+      ]
+    }
+  ]
 }
